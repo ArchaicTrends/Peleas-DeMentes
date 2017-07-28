@@ -102,7 +102,7 @@ public class UIJuego : MonoBehaviour {
             ventanaEjercicio.transform.position = new Vector3()
             {
                 x = ventanaEjercicio.transform.position.x,
-                y = 298,
+                y = 906,
                 z = ventanaEjercicio.transform.position.z
             };
         }
