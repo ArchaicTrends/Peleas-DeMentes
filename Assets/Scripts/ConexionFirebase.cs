@@ -39,13 +39,12 @@ public class ConexionFirebase : MonoBehaviour {
     private bool personajeInicializado;
 
     private string IdPersonajeRemoto;
-    private Task primeraTarea;
-    private bool primeraTareaFinalizada;
+    //private Task primeraTarea;
+    //private bool primeraTareaFinalizada;
 
     // Use this for initialization
     void Awake()
     {
-        primeraTareaFinalizada = false;
         personajeInicializado = false;
         tareasInicializacionPersonaje = new Task[5];
 
@@ -75,7 +74,14 @@ public class ConexionFirebase : MonoBehaviour {
 
         referenciaRemoto = FirebaseDatabase.DefaultInstance.GetReference("/" + NombreJuego + "/" + IdServidor);
 
-        primeraTarea = referenciaRemoto.RemoveValueAsync();
+        tareaRemoto = referenciaRemoto.GetValueAsync();
+
+        tareasInicializacionPersonaje[0] = ReferenciaVida.SetValueAsync(DatosPersonaje.Vida);
+        tareasInicializacionPersonaje[1] = ReferenciaAtaque.SetValueAsync(DatosPersonaje.Ataque);
+        tareasInicializacionPersonaje[2] = ReferenciaDefensa.SetValueAsync(DatosPersonaje.Defensa);
+        tareasInicializacionPersonaje[3] = ReferenciaAgilidad.SetValueAsync(DatosPersonaje.Agilidad);
+        tareasInicializacionPersonaje[4] = ReferenciaAtaqueCritico.SetValueAsync(DatosPersonaje.AtaqueCritico);
+        // primeraTarea = referenciaRemoto.RemoveValueAsync();
     }
 
     private void EventoCambioAtributoRemoto(object sender, ValueChangedEventArgs e)
@@ -145,70 +151,54 @@ public class ConexionFirebase : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (!primeraTareaFinalizada && primeraTarea != null && primeraTarea.IsCompleted)
+        if (tareaRemoto != null && tareaRemoto.IsCompleted && !personajeRemotoConectado)
         {
-            primeraTareaFinalizada = true;
-            tareaRemoto = referenciaRemoto.GetValueAsync();
-
-            tareasInicializacionPersonaje[0] = ReferenciaVida.SetValueAsync(DatosPersonaje.Vida);
-            tareasInicializacionPersonaje[1] = ReferenciaAtaque.SetValueAsync(DatosPersonaje.Ataque);
-            tareasInicializacionPersonaje[2] = ReferenciaDefensa.SetValueAsync(DatosPersonaje.Defensa);
-            tareasInicializacionPersonaje[3] = ReferenciaAgilidad.SetValueAsync(DatosPersonaje.Agilidad);
-            tareasInicializacionPersonaje[4] = ReferenciaAtaqueCritico.SetValueAsync(DatosPersonaje.AtaqueCritico);
-
-            Debug.Log("Primera tarea finalizada");
-        }
-        else if (primeraTareaFinalizada)
-        {
-            if (tareaRemoto != null && tareaRemoto.IsCompleted && !personajeRemotoConectado)
+            try
             {
-                try
-                {
-                    Dictionary<string, object> personajeRemoto = (Dictionary<string, object>)tareaRemoto.Result.Value;
-                    IdPersonajeRemoto = personajeRemoto.Where(val => !val.Key.Equals(SystemInfo.deviceUniqueIdentifier)).First().Key;
-                    personajeRemotoConectado = true;
+                Dictionary<string, object> personajeRemoto = (Dictionary<string, object>)tareaRemoto.Result.Value;
+                IdPersonajeRemoto = personajeRemoto.Where(val => !val.Key.Equals(SystemInfo.deviceUniqueIdentifier)).First().Key;
+                personajeRemotoConectado = true;
 
-                    ReferenciaVidaRemota = FirebaseDatabase.DefaultInstance.GetReference("/" + NombreJuego + "/" + IdServidor + "/" + IdPersonajeRemoto + "/" + TipoAtributo.VIDA.ToString());
-                    ReferenciaAtaqueRemoto = FirebaseDatabase.DefaultInstance.GetReference("/" + NombreJuego + "/" + IdServidor + "/" + IdPersonajeRemoto + "/" + TipoAtributo.ATAQUE.ToString());
-                    ReferenciaDefensaRemota = FirebaseDatabase.DefaultInstance.GetReference("/" + NombreJuego + "/" + IdServidor + "/" + IdPersonajeRemoto + "/" + TipoAtributo.DEFENSA.ToString());
-                    ReferenciaAgilidadRemota = FirebaseDatabase.DefaultInstance.GetReference("/" + NombreJuego + "/" + IdServidor + "/" + IdPersonajeRemoto + "/" + TipoAtributo.AGILIDAD.ToString());
-                    ReferenciaAtaqueCriticoRemoto = FirebaseDatabase.DefaultInstance.GetReference("/" + NombreJuego + "/" + IdServidor + "/" + IdPersonajeRemoto + "/" + TipoAtributo.ATAQUE_CRITICO.ToString());
+                ReferenciaVidaRemota = FirebaseDatabase.DefaultInstance.GetReference("/" + NombreJuego + "/" + IdServidor + "/" + IdPersonajeRemoto + "/" + TipoAtributo.VIDA.ToString());
+                ReferenciaAtaqueRemoto = FirebaseDatabase.DefaultInstance.GetReference("/" + NombreJuego + "/" + IdServidor + "/" + IdPersonajeRemoto + "/" + TipoAtributo.ATAQUE.ToString());
+                ReferenciaDefensaRemota = FirebaseDatabase.DefaultInstance.GetReference("/" + NombreJuego + "/" + IdServidor + "/" + IdPersonajeRemoto + "/" + TipoAtributo.DEFENSA.ToString());
+                ReferenciaAgilidadRemota = FirebaseDatabase.DefaultInstance.GetReference("/" + NombreJuego + "/" + IdServidor + "/" + IdPersonajeRemoto + "/" + TipoAtributo.AGILIDAD.ToString());
+                ReferenciaAtaqueCriticoRemoto = FirebaseDatabase.DefaultInstance.GetReference("/" + NombreJuego + "/" + IdServidor + "/" + IdPersonajeRemoto + "/" + TipoAtributo.ATAQUE_CRITICO.ToString());
 
-                    ReferenciaVidaRemota.ValueChanged += EventoCambioAtributoRemoto;
-                    ReferenciaAtaqueRemoto.ValueChanged += EventoCambioAtributoRemoto;
-                    ReferenciaAgilidadRemota.ValueChanged += EventoCambioAtributoRemoto;
-                    ReferenciaDefensaRemota.ValueChanged += EventoCambioAtributoRemoto;
-                    ReferenciaAtaqueCriticoRemoto.ValueChanged += EventoCambioAtributoRemoto;
-                }
-                catch (Exception)
-                {
-                    //Debug.Log("Personaje Remoto No Conectado");
-                    tareaRemoto = referenciaRemoto.GetValueAsync();
-                }
+                ReferenciaVidaRemota.ValueChanged += EventoCambioAtributoRemoto;
+                ReferenciaAtaqueRemoto.ValueChanged += EventoCambioAtributoRemoto;
+                ReferenciaAgilidadRemota.ValueChanged += EventoCambioAtributoRemoto;
+                ReferenciaDefensaRemota.ValueChanged += EventoCambioAtributoRemoto;
+                ReferenciaAtaqueCriticoRemoto.ValueChanged += EventoCambioAtributoRemoto;
             }
-
-            if (!personajeInicializado)
+            catch (Exception)
             {
-                personajeInicializado = true;
-                foreach (Task tarea in tareasInicializacionPersonaje)
-                {
-                    if (tarea == null || !tarea.IsCompleted)
-                    {
-                        personajeInicializado = false;
-                        break;
-                    }
-                }
-                if (personajeInicializado)
-                {
-                    ReferenciaVida.ValueChanged += EventoCambioAtributo;
-                    ReferenciaAtaque.ValueChanged += EventoCambioAtributo;
-                    ReferenciaAgilidad.ValueChanged += EventoCambioAtributo;
-                    ReferenciaDefensa.ValueChanged += EventoCambioAtributo;
-                    ReferenciaAtaqueCritico.ValueChanged += EventoCambioAtributo;
-                }
+                //Debug.Log("Personaje Remoto No Conectado");
+                tareaRemoto = referenciaRemoto.GetValueAsync();
             }
         }
-	}
+
+        if (!personajeInicializado)
+        {
+            personajeInicializado = true;
+            foreach (Task tarea in tareasInicializacionPersonaje)
+            {
+                if (tarea == null || !tarea.IsCompleted)
+                {
+                    personajeInicializado = false;
+                    break;
+                }
+            }
+            if (personajeInicializado)
+            {
+                ReferenciaVida.ValueChanged += EventoCambioAtributo;
+                ReferenciaAtaque.ValueChanged += EventoCambioAtributo;
+                ReferenciaAgilidad.ValueChanged += EventoCambioAtributo;
+                ReferenciaDefensa.ValueChanged += EventoCambioAtributo;
+                ReferenciaAtaqueCritico.ValueChanged += EventoCambioAtributo;
+            }
+        }
+    }
 
     public Task CambiarValorRemoto(TipoAtributo tipo, float valor)
     {
