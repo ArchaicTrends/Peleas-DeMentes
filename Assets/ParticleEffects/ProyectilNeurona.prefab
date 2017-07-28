@@ -35,6 +35,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4497753416416382}
+  - component: {fileID: 114847120321606286}
   m_Layer: 0
   m_Name: ProyectilNeurona
   m_TagString: Untagged
@@ -193,6 +194,21 @@ TrailRenderer:
     generateLightingData: 0
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
+--- !u!114 &114847120321606286
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1840883413579580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a906dff92c6e7d4b9f5e4d8720e7ff6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IniciarMovimiento: 0
+  reflejar: 0
+  Destino: {x: 0, y: 0, z: 0}
+  Destino2: {x: 0, y: 0, z: 0}
 --- !u!198 &198457734869028176
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -1155,7 +1171,7 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 0.2338884, g: 0.23749848, b: 0.75735295, a: 1}
+        key0: {r: 0, g: 0, b: 0, a: 1}
         key1: {r: 0, g: 0, b: 0, a: 1}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}

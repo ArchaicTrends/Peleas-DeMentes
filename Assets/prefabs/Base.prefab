@@ -68,7 +68,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4332957915373202}
   m_Layer: 0
-  m_Name: ObjetivoAtaque
+  m_Name: ObjetivoAtaqueReflejar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -330,6 +330,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!1 &1483120355010280
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4878376192931014}
+  m_Layer: 0
+  m_Name: ObjetivoBase
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1509754660196480
 GameObject:
   m_ObjectHideFlags: 1
@@ -1205,6 +1220,19 @@ Transform:
   m_Father: {fileID: 4702841697905968}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -3.9070003}
+--- !u!4 &4878376192931014
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1483120355010280}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.1, y: -1.28, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4997414568073522}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4879939922226416
 Transform:
   m_ObjectHideFlags: 1
@@ -1283,8 +1311,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1181751635180582}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.943647, y: -1.91, z: 0}
+  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
+  m_LocalPosition: {x: 6.98, y: -1.91, z: 0}
   m_LocalScale: {x: 0.6510858, y: 0.6510858, z: 0.6510858}
   m_Children:
   - {fileID: 4656090675925212}
@@ -1294,6 +1322,7 @@ Transform:
   - {fileID: 4813924535468022}
   - {fileID: 4685610379746164}
   - {fileID: 4332957915373202}
+  - {fileID: 4878376192931014}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
@@ -1400,6 +1429,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b56eb4967e421df4c8ee995e2bd21055, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  origenDisparo: {fileID: 4901497173918846}
+  destinoDisparo: {fileID: 0}
+  propiaBase: {fileID: 4332957915373202}
+  proyectil: {fileID: 1840883413579580, guid: fcd4f2879c6ce654ab93e99af6a8a222, type: 2}
 --- !u!198 &198913411635524316
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -1410,7 +1443,7 @@ ParticleSystem:
   lengthInSec: 0.7
   simulationSpeed: 1
   stopAction: 0
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
