@@ -8,8 +8,8 @@ public class Animaciones : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
-	}
+        
+    }
 	
     // personaje principal
     public void AnimacionLaptopDeshabilitar()
@@ -21,6 +21,11 @@ public class Animaciones : MonoBehaviour {
     {
         LaptopGeneral.SetActive(true);
         Debug.Log("hmmm");
+    }
+
+    public void ComenzarAnimacion()
+    {
+        GetComponent<Animator>().SetBool("Comenzar", true);
     }
     // Fin personaje principal
 }
