@@ -17,6 +17,13 @@ public class Personaje : MonoBehaviour {
     public Transform destinoPropioEscudo;
 
     public GameObject proyectil;
+    private Vector3 campoDeFuerzaReferencia = new Vector3()
+    {
+        x = -7.01f,
+        y = -3.03f,
+        z = -5.859772f
+    };
+    public GameObject campoDeFuerza;
 
 	// Use this for initialization
 	void Start () {
@@ -47,6 +54,8 @@ public class Personaje : MonoBehaviour {
                     float vida = firebase.DatosPersonaje.Vida - (firebase.DatosPersonaje.Ataque - def);
                     firebase.CambiarValor(TipoAtributo.VIDA, vida);
                     DispararConReflejo();
+                    var campo = Instantiate(campoDeFuerza, campoDeFuerzaReferencia, Quaternion.identity);
+                    campo.transform.localScale = new Vector3() { };
                 }
                 else
                 {
