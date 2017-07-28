@@ -112,6 +112,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &179721464 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4878376192931014, guid: 68f54af2f1da1e546b0facc99ca45039,
+    type: 2}
+  m_PrefabInternal: {fileID: 212142591}
 --- !u!1001 &212142591
 Prefab:
   m_ObjectHideFlags: 0
@@ -155,10 +160,16 @@ Prefab:
       propertyPath: m_Name
       value: BaseJugador1
       objectReference: {fileID: 0}
-    - target: {fileID: 1052094835223532, guid: 68f54af2f1da1e546b0facc99ca45039, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
+    - target: {fileID: 114934642110989122, guid: 68f54af2f1da1e546b0facc99ca45039,
+        type: 2}
+      propertyPath: destinoBase
+      value: 
+      objectReference: {fileID: 1621689462}
+    - target: {fileID: 114934642110989122, guid: 68f54af2f1da1e546b0facc99ca45039,
+        type: 2}
+      propertyPath: destinoEscudo
+      value: 
+      objectReference: {fileID: 1804746918}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 68f54af2f1da1e546b0facc99ca45039, type: 2}
   m_IsPrefabParent: 0
@@ -184,7 +195,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 360859238}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 56.019997, z: 0}
+  m_LocalPosition: {x: 0, y: 141.51999, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1946539438}
@@ -280,7 +291,7 @@ RectTransform:
   m_GameObject: {fileID: 421164233}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 90}
-  m_LocalScale: {x: 0.05464481, y: 0.05464481, z: 0.05464481}
+  m_LocalScale: {x: 0.028248588, y: 0.028248588, z: 0.028248588}
   m_Children:
   - {fileID: 723501302}
   - {fileID: 360859239}
@@ -338,6 +349,16 @@ Prefab:
     - target: {fileID: 114934642110989122, guid: 68f54af2f1da1e546b0facc99ca45039,
         type: 2}
       propertyPath: destinoDisparo
+      value: 
+      objectReference: {fileID: 1266891803}
+    - target: {fileID: 114934642110989122, guid: 68f54af2f1da1e546b0facc99ca45039,
+        type: 2}
+      propertyPath: destinoBase
+      value: 
+      objectReference: {fileID: 179721464}
+    - target: {fileID: 114934642110989122, guid: 68f54af2f1da1e546b0facc99ca45039,
+        type: 2}
+      propertyPath: destinoEscudo
       value: 
       objectReference: {fileID: 1266891803}
     m_RemovedComponents: []
@@ -702,6 +723,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1621689462 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4878376192931014, guid: 68f54af2f1da1e546b0facc99ca45039,
+    type: 2}
+  m_PrefabInternal: {fileID: 467313200}
 --- !u!114 &1642681701 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114600631422380226, guid: 68f54af2f1da1e546b0facc99ca45039,
@@ -834,6 +860,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1804746918 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4332957915373202, guid: 68f54af2f1da1e546b0facc99ca45039,
+    type: 2}
+  m_PrefabInternal: {fileID: 467313200}
 --- !u!1 &1906182304
 GameObject:
   m_ObjectHideFlags: 0

@@ -38,6 +38,8 @@ public class Personaje : MonoBehaviour {
                 //firebase.CambiarValor(TipoAtributo.VIDA, vidaOponente);
                 float probabilidadReflejo = 0.2f * firebase.DatosPersonajeRemoto.Defensa;
                 int rand = Random.Range(1, 101);
+                Debug.Log(probabilidadReflejo+" VS "+ rand);
+
                 if(probabilidadReflejo >= rand)
                 {
                     //REFLEJO

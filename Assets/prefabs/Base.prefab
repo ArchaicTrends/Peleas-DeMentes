@@ -74,7 +74,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1058729436306290
 GameObject:
   m_ObjectHideFlags: 0
@@ -1449,7 +1449,7 @@ MonoBehaviour:
   origenDisparo: {fileID: 4901497173918846}
   destinoBase: {fileID: 0}
   destinoEscudo: {fileID: 0}
-  destinoPropioEscudo: {fileID: 0}
+  destinoPropioEscudo: {fileID: 4332957915373202}
   proyectil: {fileID: 1840883413579580, guid: fcd4f2879c6ce654ab93e99af6a8a222, type: 2}
 --- !u!198 &198913411635524316
 ParticleSystem:
