@@ -8,9 +8,12 @@ public class Proyectil : MonoBehaviour {
     public bool reflejar = true;
     public Vector3 Destino;
     public Vector3 Destino2;
+    public Color color;
 
 	// Use this for initialization
 	void Start () {
+        var refe = GetComponentInChildren<ParticleSystem>().colorOverLifetime;
+        refe.color = new ParticleSystem.MinMaxGradient(color);
 	}
 	
 	// Update is called once per frame

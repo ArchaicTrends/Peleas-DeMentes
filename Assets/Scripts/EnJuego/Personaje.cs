@@ -55,7 +55,21 @@ public class Personaje : MonoBehaviour {
                     firebase.CambiarValor(TipoAtributo.VIDA, vida);
                     DispararConReflejo();
                     var campo = Instantiate(campoDeFuerza, campoDeFuerzaReferencia, Quaternion.identity);
-                    campo.transform.localScale = new Vector3() { };
+                    Vector3 posicionCampo = new Vector3()
+                    {
+                        x = campoDeFuerzaReferencia.x * (transform.position.x < 0 ? 1 : -1),
+                        y = campoDeFuerzaReferencia.y,
+                        z = campoDeFuerzaReferencia.z
+                    };
+                    Vector3 escala = new Vector3()
+                    {
+                        x = (transform.position.x < 0 ? -1 : 1),
+                        y = 1,
+                        z = 1
+                    };
+                    campo.transform.position = posicionCampo;
+                    campo.transform.localScale = escala;
+                    Destroy(campo, 1);
                 }
                 else
                 {
@@ -77,6 +91,8 @@ public class Personaje : MonoBehaviour {
         instancia.GetComponent<Proyectil>().Destino2 = destinoPropioEscudo.position;
         instancia.GetComponent<Proyectil>().IniciarMovimiento = true;
         instancia.GetComponent<Proyectil>().reflejar = true;
+        Color color = transform.position.x < 0 ? Color.black : new Color(0.91f, 0.08f, 0.08f);
+        instancia.GetComponent<Proyectil>().color = color;
     }
 
     private void DispararBase()
@@ -85,5 +101,7 @@ public class Personaje : MonoBehaviour {
         instancia.GetComponent<Proyectil>().Destino = destinoBase.position;
         instancia.GetComponent<Proyectil>().IniciarMovimiento = true;
         instancia.GetComponent<Proyectil>().reflejar = false;
+        Color color = transform.position.x < 0 ? Color.black : new Color(0.91f, 0.08f, 0.08f);
+        instancia.GetComponent<Proyectil>().color = color;
     }
 }
