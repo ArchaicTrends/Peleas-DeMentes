@@ -46,34 +46,56 @@ public class UIJuego : MonoBehaviour {
         }
 	}
 
+    private void PasarSiguienteEjercicio(TipoAtributo atributo)
+    {
+        tipoSeleccionado = atributo;
+        ventanaEjercicio.transform.position = new Vector3()
+        {
+            x = ventanaEjercicio.transform.position.x,
+            y = 0,
+            z = ventanaEjercicio.transform.position.z
+        };
+        string ejercicio = gen.SiguienteEjercicio;
+        textoEjercicios.text = ejercicio;
+        botonSeleccionado = Random.Range(0, botones.Length);
+        int sol = int.Parse(gen.SiguienteSolucion);
+        int inv = 1;
+        int mul = 1;
+        for (int i = 0; i < botones.Length; i++)
+        {
+            if (i != botonSeleccionado)
+            {
+                botones[i].GetComponentInChildren<Text>().text = (sol + mul * inv).ToString();
+                inv *= -1;
+                mul += 3;
+            }
+            else
+                botones[i].GetComponentInChildren<Text>().text = sol.ToString();
+        }
+    }
+
     public void BotonMejorarAtaque_Click()
     {
         if (ventanaEjercicio.transform.position.y != 0)
         {
-            tipoSeleccionado = TipoAtributo.ATAQUE;
+            PasarSiguienteEjercicio(TipoAtributo.ATAQUE);
+        }
+        else
+        {
             ventanaEjercicio.transform.position = new Vector3()
             {
                 x = ventanaEjercicio.transform.position.x,
-                y = 0,
+                y = 298,
                 z = ventanaEjercicio.transform.position.z
             };
-            string ejercicio = gen.SiguienteEjercicio;
-            textoEjercicios.text = ejercicio;
-            botonSeleccionado = Random.Range(0, botones.Length);
-            int sol = int.Parse(gen.SiguienteSolucion);
-            int inv = 1;
-            int mul = 1;
-            for (int i = 0; i < botones.Length; i++)
-            {
-                if (i != botonSeleccionado)
-                {
-                    botones[i].GetComponentInChildren<Text>().text = (sol + mul * inv).ToString();
-                    inv *= -1;
-                    mul += 3;
-                }
-                else
-                    botones[i].GetComponentInChildren<Text>().text = sol.ToString();
-            }
+        }
+    }
+
+    public void BotonMejorarDefensa_Click()
+    {
+        if (ventanaEjercicio.transform.position.y != 0)
+        {
+            PasarSiguienteEjercicio(TipoAtributo.DEFENSA);
         }
         else
         {
@@ -112,6 +134,7 @@ public class UIJuego : MonoBehaviour {
             if(valor != -1)
                 firebase.CambiarValor(tipoSeleccionado, valor + 1);
         }
+        PasarSiguienteEjercicio(tipoSeleccionado);
     }
 
     public void BotonComenzar_Click()
