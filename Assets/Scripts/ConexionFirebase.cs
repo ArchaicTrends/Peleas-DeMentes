@@ -51,15 +51,15 @@ public class ConexionFirebase : MonoBehaviour {
 
         DatosPersonaje = new DatosPersonaje()
         {
-            Vida = 100.0f,
+            Vida = 1000.0f,
             Agilidad = 0.0f,
             Ataque = 1.0f,
             AtaqueCritico = 0.0f,
-            Defensa = 100.0f
+            Defensa = 0.0f
         };
         DatosPersonajeRemoto = new DatosPersonaje()
         {
-            Vida = 100.0f,
+            Vida = 1000.0f,
             Agilidad = 0.0f,
             Ataque = 1.0f,
             AtaqueCritico = 0.0f,

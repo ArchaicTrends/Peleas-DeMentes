@@ -33,10 +33,10 @@ public class Personaje : MonoBehaviour {
         }
         else if (comenzarControl)
         {
-            if(Time.time - tiempo >= segundosPorAtaque - (0.03f * firebase.DatosPersonaje.Agilidad))
+            if(Time.time - tiempo >= segundosPorAtaque - (0.035f * firebase.DatosPersonaje.Agilidad))
             {
                 //firebase.CambiarValor(TipoAtributo.VIDA, vidaOponente);
-                float probabilidadReflejo = 0.2f * firebase.DatosPersonajeRemoto.Defensa;
+                float probabilidadReflejo = 0.4f * firebase.DatosPersonajeRemoto.Defensa;
                 int rand = Random.Range(1, 101);
                 Debug.Log(probabilidadReflejo+" VS "+ rand);
 
