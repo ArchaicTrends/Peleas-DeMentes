@@ -27,7 +27,7 @@ public class Personaje : MonoBehaviour {
             if(Time.time - tiempo >= segundosPorAtaque - (0.03f * firebase.DatosPersonaje.Agilidad))
             {
                 float vidaOponente = firebase.DatosPersonajeRemoto.Vida - firebase.DatosPersonaje.Ataque;
-                firebase.CambiarValor(TipoAtributo.VIDA, vidaOponente);
+                //firebase.CambiarValor(TipoAtributo.VIDA, vidaOponente);
                 tiempo = Time.time;
             }
         }
