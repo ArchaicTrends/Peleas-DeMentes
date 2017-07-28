@@ -91,6 +91,23 @@ public class UIJuego : MonoBehaviour {
         }
     }
 
+    public void BotonMejorarAgilidad_Click()
+    {
+        if (ventanaEjercicio.transform.position.y != 0)
+        {
+            PasarSiguienteEjercicio(TipoAtributo.AGILIDAD);
+        }
+        else
+        {
+            ventanaEjercicio.transform.position = new Vector3()
+            {
+                x = ventanaEjercicio.transform.position.x,
+                y = 298,
+                z = ventanaEjercicio.transform.position.z
+            };
+        }
+    }
+
     public void BotonMejorarDefensa_Click()
     {
         if (ventanaEjercicio.transform.position.y != 0)
