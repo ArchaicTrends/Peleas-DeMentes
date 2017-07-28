@@ -17,20 +17,20 @@ public class UIJuego : MonoBehaviour {
 	void Start () {
         comenzoJuego = false;
         valorTextoCountdown = 3;
-        TextoCountdown.GetComponent<Text>().text = valorTextoCountdown.ToString();
+        TextoCountdown.GetComponent<TextMesh>().text = valorTextoCountdown.ToString();
 	}
 	
 	// Update is called once per frame
 	void Update () {
         if (comenzoJuego)
         {
-            if (valorTextoCountdown > 0 && (Time.time - tiempo) > 2)
+            if (valorTextoCountdown > 1 && (Time.time - tiempo) > 2)
             {
                 tiempo = Time.time;
                 valorTextoCountdown--;
-                TextoCountdown.GetComponent<Text>().text = valorTextoCountdown.ToString();
+                TextoCountdown.GetComponent<TextMesh>().text = valorTextoCountdown.ToString();
             }
-            else if (valorTextoCountdown <= 0 && (Time.time - tiempo) > 2)
+            else if (valorTextoCountdown <= 1 && (Time.time - tiempo) > 2)
                 TextoCountdown.SetActive(false);
         }
 	}
