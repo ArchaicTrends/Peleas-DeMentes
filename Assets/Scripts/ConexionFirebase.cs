@@ -22,6 +22,15 @@ public class ConexionFirebase : MonoBehaviour {
     public DatabaseReference ReferenciaAgilidad;
     public DatabaseReference ReferenciaAtaqueCritico;
     public DatosPersonaje DatosPersonaje;
+
+
+    public DatabaseReference ReferenciaVidaRemota;
+    public DatabaseReference ReferenciaAtaqueRemoto;
+    public DatabaseReference ReferenciaDefensaRemota;
+    public DatabaseReference ReferenciaAgilidadRemota;
+    public DatabaseReference ReferenciaAtaqueCriticoRemoto;
+
+
     public DatosPersonaje DatosPersonajeRemoto;
 
     private Task<DataSnapshot> tareaRemoto;
@@ -65,7 +74,39 @@ public class ConexionFirebase : MonoBehaviour {
         ReferenciaAtaqueCritico = FirebaseDatabase.DefaultInstance.GetReference("/" + NombreJuego + "/" + IdServidor + "/" + SystemInfo.deviceUniqueIdentifier + "/"+TipoAtributo.ATAQUE_CRITICO.ToString());
 
         referenciaRemoto = FirebaseDatabase.DefaultInstance.GetReference("/" + NombreJuego + "/" + IdServidor);
+
         primeraTarea = referenciaRemoto.RemoveValueAsync();
+    }
+
+    private void EventoCambioAtributoRemoto(object sender, ValueChangedEventArgs e)
+    {
+        try
+        {
+            float valor = float.Parse(e.Snapshot.Value.ToString());
+            TipoAtributo tipo = (TipoAtributo)Enum.Parse(typeof(TipoAtributo), e.Snapshot.Key);
+            switch (tipo)
+            {
+                case TipoAtributo.VIDA:
+                    DatosPersonajeRemoto.Vida = valor;
+                    break;
+                case TipoAtributo.AGILIDAD:
+                    DatosPersonajeRemoto.Agilidad = valor;
+                    break;
+                case TipoAtributo.ATAQUE:
+                    DatosPersonajeRemoto.Ataque = valor;
+                    break;
+                case TipoAtributo.DEFENSA:
+                    DatosPersonajeRemoto.Defensa = valor;
+                    break;
+                case TipoAtributo.ATAQUE_CRITICO:
+                    DatosPersonajeRemoto.AtaqueCritico = valor;
+                    break;
+            }
+        }
+        catch (Exception)
+        {
+
+        }
     }
 
     private void EventoCambioAtributo(object sender, ValueChangedEventArgs e)
@@ -126,6 +167,18 @@ public class ConexionFirebase : MonoBehaviour {
                     Dictionary<string, object> personajeRemoto = (Dictionary<string, object>)tareaRemoto.Result.Value;
                     IdPersonajeRemoto = personajeRemoto.Where(val => !val.Key.Equals(SystemInfo.deviceUniqueIdentifier)).First().Key;
                     personajeRemotoConectado = true;
+
+                    ReferenciaVidaRemota = FirebaseDatabase.DefaultInstance.GetReference("/" + NombreJuego + "/" + IdServidor + "/" + IdPersonajeRemoto + "/" + TipoAtributo.VIDA.ToString());
+                    ReferenciaAtaqueRemoto = FirebaseDatabase.DefaultInstance.GetReference("/" + NombreJuego + "/" + IdServidor + "/" + IdPersonajeRemoto + "/" + TipoAtributo.ATAQUE.ToString());
+                    ReferenciaDefensaRemota = FirebaseDatabase.DefaultInstance.GetReference("/" + NombreJuego + "/" + IdServidor + "/" + IdPersonajeRemoto + "/" + TipoAtributo.DEFENSA.ToString());
+                    ReferenciaAgilidadRemota = FirebaseDatabase.DefaultInstance.GetReference("/" + NombreJuego + "/" + IdServidor + "/" + IdPersonajeRemoto + "/" + TipoAtributo.AGILIDAD.ToString());
+                    ReferenciaAtaqueCriticoRemoto = FirebaseDatabase.DefaultInstance.GetReference("/" + NombreJuego + "/" + IdServidor + "/" + IdPersonajeRemoto + "/" + TipoAtributo.ATAQUE_CRITICO.ToString());
+
+                    ReferenciaVidaRemota.ValueChanged += EventoCambioAtributoRemoto;
+                    ReferenciaAtaqueRemoto.ValueChanged += EventoCambioAtributoRemoto;
+                    ReferenciaAgilidadRemota.ValueChanged += EventoCambioAtributoRemoto;
+                    ReferenciaDefensaRemota.ValueChanged += EventoCambioAtributoRemoto;
+                    ReferenciaAtaqueCriticoRemoto.ValueChanged += EventoCambioAtributoRemoto;
                 }
                 catch (Exception)
                 {
@@ -157,7 +210,7 @@ public class ConexionFirebase : MonoBehaviour {
         }
 	}
 
-    public Task CambiarValor(TipoAtributo tipo, float valor)
+    public Task CambiarValorRemoto(TipoAtributo tipo, float valor)
     {
         switch (tipo)
         {
@@ -178,6 +231,29 @@ public class ConexionFirebase : MonoBehaviour {
                 break;
         }
         return referenciaRemoto.Child(IdPersonajeRemoto + "/" + tipo).SetValueAsync(valor);
+    }
+
+    public Task CambiarValor(TipoAtributo tipo, float valor)
+    {
+        switch (tipo)
+        {
+            case TipoAtributo.VIDA:
+                DatosPersonaje.Vida = valor;
+                break;
+            case TipoAtributo.AGILIDAD:
+                DatosPersonaje.Agilidad = valor;
+                break;
+            case TipoAtributo.ATAQUE:
+                DatosPersonaje.Ataque = valor;
+                break;
+            case TipoAtributo.DEFENSA:
+                DatosPersonaje.Defensa = valor;
+                break;
+            case TipoAtributo.ATAQUE_CRITICO:
+                DatosPersonaje.AtaqueCritico = valor;
+                break;
+        }
+        return referenciaRemoto.Child(SystemInfo.deviceUniqueIdentifier + "/" + tipo).SetValueAsync(valor);
     }
 }
 

@@ -41,14 +41,19 @@ public class Personaje : MonoBehaviour {
                 if(probabilidadReflejo >= rand)
                 {
                     //REFLEJO
+                    float def = firebase.DatosPersonaje.Ataque * (0.005f * firebase.DatosPersonaje.Defensa);
+                    float vida = firebase.DatosPersonaje.Vida - (firebase.DatosPersonaje.Ataque - def);
+                    firebase.CambiarValor(TipoAtributo.VIDA, vida);
+                    DispararConReflejo();
                 }
                 else
                 {
                     //DEFENSA
                     float def = firebase.DatosPersonaje.Ataque * (0.005f * firebase.DatosPersonajeRemoto.Defensa);
                     float vidaOponente = firebase.DatosPersonajeRemoto.Vida - (firebase.DatosPersonaje.Ataque - def);
+                    firebase.CambiarValorRemoto(TipoAtributo.VIDA, vidaOponente);
+                    DispararBase();
                 }
-
                 tiempo = Time.time;
             }
         }
