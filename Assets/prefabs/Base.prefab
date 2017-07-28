@@ -1282,8 +1282,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1181751635180582}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.885445, y: -1.886086, z: 0}
+  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
+  m_LocalPosition: {x: 6.98, y: -1.91, z: 0}
   m_LocalScale: {x: 0.6510858, y: 0.6510858, z: 0.6510858}
   m_Children:
   - {fileID: 4971145010038360}
@@ -1393,6 +1393,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LaptopGeneral: {fileID: 1800617950695188}
+  animacionCerebelo: {fileID: 95809745205248046}
+  animacionNeurona: {fileID: 95921291593115026}
+  animacionCerebro: {fileID: 95744084026412184}
 --- !u!114 &114934642110989122
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1409,7 +1412,8 @@ MonoBehaviour:
   destinoEscudo: {fileID: 0}
   destinoPropioEscudo: {fileID: 4332957915373202}
   proyectil: {fileID: 1840883413579580, guid: fcd4f2879c6ce654ab93e99af6a8a222, type: 2}
-  campoDeFuerza: {fileID: 0}
+  campoDeFuerza: {fileID: 1136668007630996, guid: 36df9c4bc02bcd244b29ad64f91696e1,
+    type: 2}
 --- !u!212 &212016402878600596
 SpriteRenderer:
   m_ObjectHideFlags: 1

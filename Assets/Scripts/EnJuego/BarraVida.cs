@@ -9,6 +9,8 @@ public class BarraVida : MonoBehaviour {
     private int orientacion;
     private float MaximaVida;
     private float VidaAnterior;
+    public Animaciones animacion1;
+    public Animaciones animacion2;
 
     public bool remoto;
     private ConexionFirebase firebase;
@@ -26,6 +28,27 @@ public class BarraVida : MonoBehaviour {
     {
         if(VidaAnterior != (remoto ? firebase.DatosPersonajeRemoto.Vida : firebase.DatosPersonaje.Vida))
         {
+            if (remoto)
+                animacion2.HerirCerebro();
+            else
+                animacion1.HerirCerebro();
+
+            if(firebase.DatosPersonaje.Vida > firebase.DatosPersonajeRemoto.Vida)
+            {
+                animacion1.ActivarAnimacionPerder(true);
+                animacion2.ActivarAnimacionPerder(false);
+            }
+            else if(firebase.DatosPersonaje.Vida < firebase.DatosPersonajeRemoto.Vida)
+            {
+                animacion1.ActivarAnimacionPerder(false);
+                animacion2.ActivarAnimacionPerder(true);
+            }
+            else
+            {
+                animacion1.ActivarAnimacionPerder(false);
+                animacion2.ActivarAnimacionPerder(false);
+            }
+
             float dif = VidaAnterior - (remoto ? firebase.DatosPersonajeRemoto.Vida : firebase.DatosPersonaje.Vida);
             Debug.Log(dif);
             VidaAnterior = remoto ? firebase.DatosPersonajeRemoto.Vida : firebase.DatosPersonaje.Vida;

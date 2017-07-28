@@ -149,7 +149,7 @@ public class UIJuego : MonoBehaviour {
                     break;
             }
             if(valor != -1)
-                firebase.CambiarValor(tipoSeleccionado, valor + 1);
+                firebase.CambiarValor(tipoSeleccionado, valor + 10);
         }
         PasarSiguienteEjercicio(tipoSeleccionado);
     }
