@@ -50,19 +50,19 @@ public class ConexionFirebase : MonoBehaviour {
 
         DatosPersonaje = new DatosPersonaje()
         {
-            Vida = 1000.0f,
+            Vida = 400.0f,
             Agilidad = 0.0f,
             Ataque = 1.0f,
             AtaqueCritico = 0.0f,
-            Defensa = 100.0f
+            Defensa = 0.0f
         };
         DatosPersonajeRemoto = new DatosPersonaje()
         {
-            Vida = 1000.0f,
+            Vida = 400.0f,
             Agilidad = 0.0f,
             Ataque = 1.0f,
             AtaqueCritico = 0.0f,
-            Defensa = 100.0f
+            Defensa = 0.0f
         };
 
         FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://peleas-dementes.firebaseio.com/");
