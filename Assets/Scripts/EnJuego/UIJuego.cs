@@ -9,7 +9,7 @@ public class UIJuego : MonoBehaviour {
     public Animaciones AnimacionCerebro2;
     public GameObject TextoCountdown;
     public GameObject BotonComenzar;
-    private bool comenzoJuego;
+    public static bool comenzoJuego = false;
     private float tiempo;
     private int valorTextoCountdown;
 

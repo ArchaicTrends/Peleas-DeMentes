@@ -70,25 +70,31 @@ public class ConexionFirebase : MonoBehaviour {
 
     private void EventoCambioAtributo(object sender, ValueChangedEventArgs e)
     {
-        float valor = float.Parse(e.Snapshot.Value.ToString());
-        TipoAtributo tipo = (TipoAtributo)Enum.Parse(typeof(TipoAtributo), e.Snapshot.Key);
-        switch (tipo)
+        try {
+            float valor = float.Parse(e.Snapshot.Value.ToString());
+            TipoAtributo tipo = (TipoAtributo)Enum.Parse(typeof(TipoAtributo), e.Snapshot.Key);
+            switch (tipo)
+            {
+                case TipoAtributo.VIDA:
+                    DatosPersonaje.Vida = valor;
+                    break;
+                case TipoAtributo.AGILIDAD:
+                    DatosPersonaje.Agilidad = valor;
+                    break;
+                case TipoAtributo.ATAQUE:
+                    DatosPersonaje.Ataque = valor;
+                    break;
+                case TipoAtributo.DEFENSA:
+                    DatosPersonaje.Defensa = valor;
+                    break;
+                case TipoAtributo.ATAQUE_CRITICO:
+                    DatosPersonaje.AtaqueCritico = valor;
+                    break;
+            }
+        }
+        catch (Exception)
         {
-            case TipoAtributo.VIDA:
-                DatosPersonaje.Vida = valor;
-                break;
-            case TipoAtributo.AGILIDAD:
-                DatosPersonaje.Agilidad = valor;
-                break;
-            case TipoAtributo.ATAQUE:
-                DatosPersonaje.Ataque = valor;
-                break;
-            case TipoAtributo.DEFENSA:
-                DatosPersonaje.Defensa = valor;
-                break;
-            case TipoAtributo.ATAQUE_CRITICO:
-                DatosPersonaje.AtaqueCritico = valor;
-                break;
+
         }
     }
 
