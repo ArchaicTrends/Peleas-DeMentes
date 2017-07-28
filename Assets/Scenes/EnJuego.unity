@@ -195,7 +195,7 @@ RectTransform:
   m_GameObject: {fileID: 421164233}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 90}
-  m_LocalScale: {x: 0.046296295, y: 0.046296295, z: 0.046296295}
+  m_LocalScale: {x: 0.05503956, y: 0.05503956, z: 0.05503956}
   m_Children:
   - {fileID: 723501302}
   m_Father: {fileID: 0}
@@ -294,6 +294,14 @@ Prefab:
     - target: {fileID: 1181751635180582, guid: 68f54af2f1da1e546b0facc99ca45039, type: 2}
       propertyPath: m_Name
       value: BaseJugador1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4483658603010546, guid: 68f54af2f1da1e546b0facc99ca45039, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 4483658603010546, guid: 68f54af2f1da1e546b0facc99ca45039, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -1.15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 68f54af2f1da1e546b0facc99ca45039, type: 2}
