@@ -1,9 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 public class GeneradorEjercicios {
+
+    private List<string> soluciones;
 
     public string SiguienteEjercicio
     {
@@ -19,33 +23,60 @@ public class GeneradorEjercicios {
         }
     }
 
+    public string SiguienteSolucion
+    {
+        get
+        {
+            string prob = "...";
+            if (index2 < soluciones.Count)
+            {
+                prob = soluciones[index2];
+                index2++;
+            }
+            return prob;
+        }
+    }
+
     private List<string> ejercicios;
     private int index;
+    private int index2;
     private EjercicioPrimerGrupo EjerciciosFaciles;
     private EjercicioPrimerGrupo EjerciciosMedios;
-    private EjercicioSegundoGrupo EjerciciosDificiles;
+    //private EjercicioSegundoGrupo EjerciciosDificiles;
 
     public GeneradorEjercicios()
     {
         index = 0;
+        index2 = 0;
         ejercicios = new List<string>();
         EjerciciosFaciles = new EjercicioPrimerGrupo(1, 2, 1, 2, new Operador[] { Operador.Suma, Operador.Resta, Operador.Multiplicacion, Operador.Division });
         EjerciciosMedios = new EjercicioPrimerGrupo(1, 3, 2, 3, new Operador[] { Operador.Suma, Operador.Resta, Operador.Multiplicacion, Operador.Division });
-        EjerciciosDificiles = new EjercicioSegundoGrupo();
+        //EjerciciosDificiles = new EjercicioSegundoGrupo();
+        Debug.Log("OK");
+        soluciones = new List<string>();
+        for (int i = 0; i < 50; i++)
+        {
+            string prob = EjerciciosFaciles.GenerarEjercicio();
+            ejercicios.Add(prob);
+            soluciones.Add(EjerciciosFaciles.GetSolucion(prob));
+        }
+        for (int i = 0; i < 50; i++)
+        {
+            string prob = EjerciciosMedios.GenerarEjercicio();
+            ejercicios.Add(prob);
+            soluciones.Add(EjerciciosMedios.GetSolucion(prob));
+        }
+        /*for (int i = 0; i < 20; i++)
+        {
+            string prob = EjerciciosDificiles.GenerarEjercicio();
+            ejercicios.Add(prob);
+            soluciones.Add(EjerciciosDificiles.GetSolucion(prob));
+        }*/
 
-        for (int i = 0; i < 40; i++)
-            ejercicios.Add(EjerciciosFaciles.GenerarEjercicio());
-        for (int i = 0; i < 40; i++)
-            ejercicios.Add(EjerciciosMedios.GenerarEjercicio());
-        for (int i = 0; i < 20; i++)
-            ejercicios.Add(EjerciciosDificiles.GenerarEjercicio());
+        
     }
 }
 
-public interface Ejercicio
-{
-    string GenerarEjercicio();
-}
 
 public class ListaNumericaAleatoria
 {
@@ -98,35 +129,36 @@ public class ListaNumericaAleatoria
 	}
 }
 
-public class EjercicioPrimerGrupo : Ejercicio
+public class EjercicioPrimerGrupo
 {
-	private List<ListaNumericaAleatoria> lista;
-	private Operador[] operadores;
-	private int minimoOperadores;
-	private int maximoOperadores;
+    private List<ListaNumericaAleatoria> lista;
+    private Operador[] operadores;
+    private int minimoOperadores;
+    private int maximoOperadores;
 
-	public EjercicioPrimerGrupo(int minDig, int maxDig, int minOp, int maxOp, Operador[] operadores)
-	{
-		this.operadores = operadores;
+    public EjercicioPrimerGrupo(int minDig, int maxDig, int minOp, int maxOp, Operador[] operadores)
+    {
+        this.operadores = operadores;
         lista = new List<ListaNumericaAleatoria>();
-		for (int i = 0; i <= maxOp; i++) 
-		{
-			lista.Add (new ListaNumericaAleatoria (minDig, maxDig));
-		}
-		minimoOperadores = minOp;
-		maximoOperadores = maxOp;
-	}
+        for (int i = 0; i <= maxOp; i++)
+        {
+            lista.Add(new ListaNumericaAleatoria(minDig, maxDig));
+        }
+        minimoOperadores = minOp;
+        maximoOperadores = maxOp;
+    }
 
-	public string GenerarEjercicio()
-	{
-		StringBuilder sb = new StringBuilder();
-		int numOp = Random.Range (minimoOperadores, maximoOperadores + 1);
+    public string GenerarEjercicio()
+    {
+        StringBuilder sb = new StringBuilder();
+        int numOp = Random.Range(minimoOperadores, maximoOperadores + 1);
         int i;
+        //List<Operador> operadoresSel = new List<Operador>();
         DesordenarOperadores();
         int numeroAnterior = -1;
         Operador? operadorAnterior = null;
         for (i = 0; i < numOp; i++)
-		{
+        {
             if (operadorAnterior != null && (operadorAnterior.Value == Operador.Division || operadorAnterior.Value == Operador.Multiplicacion))
             {
                 if (numeroAnterior > 1 && operadorAnterior.Value == Operador.Division)
@@ -136,9 +168,9 @@ public class EjercicioPrimerGrupo : Ejercicio
                         sig--;
                     numeroAnterior = sig;
                 }
-                else if(operadorAnterior.Value == Operador.Multiplicacion)
+                else if (operadorAnterior.Value == Operador.Multiplicacion)
                 {
-                    numeroAnterior = int.Parse(lista[i].SiguienteNumero.ToString()[0]+"");
+                    numeroAnterior = int.Parse(lista[i].SiguienteNumero.ToString()[0] + "");
                 }
             }
             else
@@ -146,9 +178,10 @@ public class EjercicioPrimerGrupo : Ejercicio
                 numeroAnterior = lista[i].SiguienteNumero;
             }
             operadorAnterior = operadores[i];
+            //operadoresSel.Add(operadores[i]);
             sb.Append(numeroAnterior);
             sb.Append(OperadorToString(operadorAnterior.Value));
-		}
+        }
         if (operadorAnterior != null && (operadorAnterior.Value == Operador.Division || operadorAnterior.Value == Operador.Multiplicacion))
         {
             if (numeroAnterior > 1 && operadorAnterior.Value == Operador.Division)
@@ -169,9 +202,25 @@ public class EjercicioPrimerGrupo : Ejercicio
         {
             numeroAnterior = lista[i].SiguienteNumero;
         }
+
         sb.Append(numeroAnterior);
-        return sb.ToString();
-	}
+        return sb.ToString(); 
+    }
+
+    public string GetSolucion(string exp)
+    {
+        return Evaluate(exp.ToString().Replace('x', '*')).ToString();
+    }
+
+    public static double Evaluate(string expression)
+    {
+        var doc = new System.Xml.XPath.XPathDocument(new System.IO.StringReader("<r/>"));
+        var nav = doc.CreateNavigator();
+        var newString = expression;
+        newString = (new System.Text.RegularExpressions.Regex(@"([\+\-\*])")).Replace(newString, " ${1} ");
+        newString = newString.Replace("/", " div ").Replace("%", " mod ");
+        return (double)nav.Evaluate("number(" + newString + ")");
+    }
 
     private string OperadorToString(Operador op)
     {
@@ -207,7 +256,7 @@ public class EjercicioPrimerGrupo : Ejercicio
 	}
 }
 
-public class EjercicioSegundoGrupo : Ejercicio
+public class EjercicioSegundoGrupo
 {
     private ListaNumericaAleatoria numerosRaiz;
     private ListaNumericaAleatoria numerosExp2;
@@ -238,6 +287,16 @@ public class EjercicioSegundoGrupo : Ejercicio
             st = numerosExp3.SiguienteNumero + "³";
         }
         return st;
+    }
+
+    public string GetSolucion(string exp)
+    {
+        if (exp.Contains("√"))
+            return Mathf.Sqrt(int.Parse(Regex.Split(exp, @"\d+")[1])).ToString();
+        else if (exp.Contains("²"))
+            return Mathf.Pow(int.Parse(Regex.Split(exp, @"\d+")[0]), 2).ToString();
+        else
+            return Mathf.Pow(int.Parse(Regex.Split(exp, @"\d+")[0]), 3).ToString();
     }
 }
 

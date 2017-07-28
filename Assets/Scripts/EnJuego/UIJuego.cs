@@ -12,9 +12,20 @@ public class UIJuego : MonoBehaviour {
     public static bool comenzoJuego = false;
     private float tiempo;
     private int valorTextoCountdown;
+    private int botonSeleccionado;
+    public Text textoEjercicios;
+    public GameObject[] botones;
+    private TipoAtributo tipoSeleccionado;
+
+    public GameObject ventanaEjercicio;
+
+    private ConexionFirebase firebase;
+    GeneradorEjercicios gen;
 
 	// Use this for initialization
 	void Start () {
+        firebase = GameObject.FindObjectOfType<ConexionFirebase>();
+        gen = new GeneradorEjercicios();
         comenzoJuego = false;
         valorTextoCountdown = 3;
         TextoCountdown.GetComponent<TextMesh>().text = valorTextoCountdown.ToString();
@@ -34,6 +45,74 @@ public class UIJuego : MonoBehaviour {
                 TextoCountdown.SetActive(false);
         }
 	}
+
+    public void BotonMejorarAtaque_Click()
+    {
+        if (ventanaEjercicio.transform.position.y != 0)
+        {
+            tipoSeleccionado = TipoAtributo.ATAQUE;
+            ventanaEjercicio.transform.position = new Vector3()
+            {
+                x = ventanaEjercicio.transform.position.x,
+                y = 0,
+                z = ventanaEjercicio.transform.position.z
+            };
+            string ejercicio = gen.SiguienteEjercicio;
+            textoEjercicios.text = ejercicio;
+            botonSeleccionado = Random.Range(0, botones.Length);
+            int sol = int.Parse(gen.SiguienteSolucion);
+            int inv = 1;
+            int mul = 1;
+            for (int i = 0; i < botones.Length; i++)
+            {
+                if (i != botonSeleccionado)
+                {
+                    botones[i].GetComponentInChildren<Text>().text = (sol + mul * inv).ToString();
+                    inv *= -1;
+                    mul += 3;
+                }
+                else
+                    botones[i].GetComponentInChildren<Text>().text = sol.ToString();
+            }
+        }
+        else
+        {
+            ventanaEjercicio.transform.position = new Vector3()
+            {
+                x = ventanaEjercicio.transform.position.x,
+                y = 298,
+                z = ventanaEjercicio.transform.position.z
+            };
+        }
+    }
+
+    public void SeleccionarRespuesta(int i)
+    {
+        if(i == botonSeleccionado)
+        {
+            float valor = 0;
+            switch (tipoSeleccionado)
+            {
+                case TipoAtributo.ATAQUE:
+                    valor = firebase.DatosPersonaje.Ataque;
+                    break;
+                case TipoAtributo.AGILIDAD:
+                    valor = firebase.DatosPersonaje.Agilidad;
+                    break;
+                case TipoAtributo.ATAQUE_CRITICO:
+                    valor = firebase.DatosPersonaje.AtaqueCritico;
+                    break;
+                case TipoAtributo.DEFENSA:
+                    valor = firebase.DatosPersonaje.Defensa;
+                    break;
+                default:
+                    valor = -1;
+                    break;
+            }
+            if(valor != -1)
+                firebase.CambiarValor(tipoSeleccionado, valor + 1);
+        }
+    }
 
     public void BotonComenzar_Click()
     {
